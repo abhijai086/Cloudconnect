@@ -1,9 +1,10 @@
 const express = require('express'),
     app = express()
+const cors = require('cors')
 const dbservice = require('./src/firestoreservice')
-const port = 9000
+const port = 8080
 
-app.use(express.json())
+app.use(express.json(), cors())
 
 //Service for displaying all  patients
 app.get('/getAllPatients', async function (req, res) {

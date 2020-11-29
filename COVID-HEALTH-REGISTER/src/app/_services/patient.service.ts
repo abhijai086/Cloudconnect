@@ -13,7 +13,8 @@ export class PatientService {
     getPatientList(): Observable<any> {
         return this.http.get(`${environment.backendUrl}/getAllPatients`);
     }
- addPatient(patient: any): Observable<any> {
-        return this.http.post<any>('http://localhost:9000/addPatient', patient)
+ 
+    addPatient(patient: any): Observable<any> {
+        return this.http.post<any>(`${environment.backendUrl}/addPatient`, patient)
     }
 }

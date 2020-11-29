@@ -8,6 +8,7 @@ COPY package*.json $APPDIR/
 
 RUN npm install
 
+COPY server.js $APPDIR/
 COPY src/ $APPDIR/src
 
 EXPOSE 8080

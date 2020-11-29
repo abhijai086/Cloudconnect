@@ -8,7 +8,12 @@ async function getAllPatients() {
             querySnapshot.forEach((doc) => {
                 const patientData = {}
                 patientData['patientId'] = doc.id;
-                patientData['details'] = doc.data();
+                const data = doc.data()
+                patientData['firstName'] = data.firstName
+                patientData['lastName'] = data.lastName
+                patientData['contact'] = data.contact
+                patientData['hospitalName'] = data.hospitalName
+                patientData['result'] = data.result
                 patientList.push(patientData)
             });
         });
@@ -45,7 +50,7 @@ async function deletePatient(patientId) {
             return { message: "Patient deleted  successfully" }
         } else {
             return { message: "Patient not found", status: 204 }
-        }  
+        }
     } catch (err) {
         return { message: err, status: 500 }
     }
@@ -63,18 +68,11 @@ async function addPatient(patientDetails) {
 
 async function getSequence() {
     try {
-        const documentidList = []
-        await dbconn.collection('patientDetails').get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                documentidList.push(doc.id)
-            });
+        const seq = await dbconn.collection('patientDetails').get().then((querySnapshot) => {
+            return querySnapshot.docs.length + 1
         });
-        if (documentidList.length > 0) {
-            const seq = await Math.max(documentidList) + 1
-            return seq
-        } else {
-            return 1
-        }
+        return seq
+
     } catch (err) {
         return { message: err, status: 500 }
     }

@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     apiUrl: 'http://localhost:4000',
-    backendUrl:'http://localhost:9000',
+    backendUrl:'http://localhost:8080',
     clientId:'0oa1cbceuwcsGi2Wk5d6',
     domain:'dev-7513520.okta.com'
 };

@@ -1,6 +1,6 @@
 ﻿<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-    <div class="navbar-nav">
+<nav class="navbar navbar-expand navbar-dark bg-dark  flex-column flex-md-row bd-navbar" *ngIf="currentUser">
+    <div class="navbar-nav bd-navbar-nav flex-row">
         <a class="nav-item nav-link">Welcome {{currentUser.firstName}}</a>
         <a class="nav-item nav-link" (click)="logout()">Logout</a>
     </div>
