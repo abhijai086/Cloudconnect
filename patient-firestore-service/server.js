@@ -31,7 +31,7 @@ app.post('/addPatient', async function (req, res) {
 });
 
 //Service for modify a patient details
-app.post('/updatePatient:patientId', async function (req, res) {
+app.post('/updatePatient/:patientId', async function (req, res) {
     const response = await dbservice.updatePatient(req.params.patientId, req.body) 
     res.json(response)
 });
