@@ -1,0 +1,17 @@
+﻿<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link">Welcome {{currentUser.firstName}}</a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+</nav>
+
+<!-- main app container -->
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+
+<!-- credits -->
+<div class="text-center mt-4">
+    <a href="https://www.worldometers.info/coronavirus/?utm_campaign=homeAdvegas1" target="_top">World Total Covid Count</a>
+</div>
