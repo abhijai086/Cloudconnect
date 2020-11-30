@@ -68,11 +68,20 @@ async function addPatient(patientDetails) {
 
 async function getSequence() {
     try {
-        const seq = await dbconn.collection('patientDetails').get().then((querySnapshot) => {
-            return querySnapshot.docs.length + 1
+        const docIdList = []
+        await dbconn.collection('patientDetails').get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                docIdList.push(parseInt(doc.id))
+            });
         });
-        return seq
-
+        const arrLength = docIdList.length
+        if(arrLength > 0){
+            const sortArray = await docIdList.sort()
+            const maxNumber = sortArray[arrLength - 1]
+            return maxNumber + 1
+        }else{
+            return 1
+        } 
     } catch (err) {
         return { message: err, status: 500 }
     }
