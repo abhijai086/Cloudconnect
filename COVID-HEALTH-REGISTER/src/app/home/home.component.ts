@@ -23,6 +23,7 @@ export class HomeComponent {
         $("#myModal").modal("show");
         switch (id) {
             case 1:
+				this.formData.enable()
                 this.formData = new FormGroup({
                     firstName: new FormControl("", [Validators.required]),
                     lastName: new FormControl("", [Validators.required]),
@@ -37,10 +38,12 @@ export class HomeComponent {
             case 2:
                 this.title = "Update Patient Details";
                 this.sShow = true;
+				this.formData.enable()
                 this.action = "update";
                 break;
             case 3:
                 this.title = "View Patient Details";
+				this.formData.disable()
                 this.sShow = false;
                 break;
             default: this.title = "Patient Details";
