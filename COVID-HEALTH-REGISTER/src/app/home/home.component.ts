@@ -10,20 +10,51 @@ declare var $: any;
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
     patientsList: Observable<Patient[]>;
+    patientId : number;
     restMsg = {};
-
-    loading = false;
-    addForm;
-    openPopup() {
-        $("#myModal").modal("show");
-    }
+    title = "";
+    sShow: boolean = true;
     users: User[];
+    loading = false;
+    formData;
+    action = "";
+
+    openPopup(id) {
+        $("#myModal").modal("show");
+        switch (id) {
+            case 1:
+                this.formData = new FormGroup({
+                    firstName: new FormControl("", [Validators.required]),
+                    lastName: new FormControl("", [Validators.required]),
+                    hospitalName: new FormControl("", [Validators.required]),
+                    contact: new FormControl("", [Validators.required]),
+                    result: new FormControl("", [Validators.required])
+                });
+                this.title = "Add Patient Details";
+                this.sShow = true;
+                this.action = "add";
+                break;
+            case 2:
+                this.title = "Update Patient Details";
+                this.sShow = true;
+                this.action = "update";
+                break;
+            case 3:
+                this.title = "View Patient Details";
+                this.sShow = false;
+                break;
+            default: this.title = "Patient Details";
+
+        }
+
+    }
+
     constructor(private userService: UserService, private patientService: PatientService) { }
 
     ngOnInit() {
         this.loading = true;
         this.reloadData();
-        this.addForm = new FormGroup({
+        this.formData = new FormGroup({
             firstName: new FormControl("", [Validators.required]),
             lastName: new FormControl("", [Validators.required]),
             hospitalName: new FormControl("", [Validators.required]),
@@ -42,6 +73,7 @@ export class HomeComponent {
     }
 
     addPatient(addForm) {
+        console.log("add called")
         this.patientService.addPatient(addForm).subscribe(
             (res) => {
                 this.restMsg = res;
@@ -65,8 +97,18 @@ export class HomeComponent {
     }
 
     updatePatient(patient) {
-        this.openPopup()
-        this.patientService.updatePatient(patient.patientId, patient).subscribe(
+        this.patientId = patient.patientId
+        this.formData.patchValue(patient)
+        this.openPopup(2)
+        console.log("update called")
+        console.log(patient)
+    }
+
+    update(patient){
+        console.log(this.patientId)
+        console.log("update 2")
+        console.log(patient)
+        this.patientService.updatePatient(this.patientId, patient).subscribe(
             (res) => {
                 this.restMsg = res;
                 this.reloadData();
@@ -74,14 +116,19 @@ export class HomeComponent {
                     this.restMsg = {};
                 }, 2000);
             });
+        $('#myModal').modal('toggle');
     }
 
     viewDetails(patient) {
-        this.openPopup()  
-      }
-    
-      setTimeout(){
-    
-      }
+        this.formData.patchValue(patient)
+        this.openPopup(3)
+    }
+
+    submitForm(data) {
+        if (this.action == "add")
+            this.addPatient(data)
+        else if (this.action == "update")
+            this.update(data)
+    }
 
 }

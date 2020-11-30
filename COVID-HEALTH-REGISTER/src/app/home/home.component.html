@@ -9,42 +9,42 @@
         <div class="modal-content">
           <!-- Modal Header for ADD Patient-->
           <div class="modal-header">
-            <h4 class="modal-title">Add Patient Details</h4>
+            <h4 class="modal-title">{{ title }}</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
 
           <!-- Modal body -->
           <div class="modal-body">
-            <form [formGroup]="addForm" (ngSubmit)="addPatient(addForm.value)" class="form"
+            <form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="form"
               enctype="multipart/form-data">
 
               <div class="form-group">
                 <div class="input-group controls">
                   <label for="name">First Name</label>
-                  <input formControlName="firstName" type="text" class="form-control" name="name">
+                  <input formControlName="firstName" type="text" class="form-control" name="name" [disabled]="!sShow">
                 </div>
                 <div class="input-group controls">
                   <label for="name">Last Name</label>
-                  <input formControlName="lastName" type="text" class="form-control" name="name">
+                  <input formControlName="lastName" type="text" class="form-control" name="name" [disabled]="!sShow">
                 </div>
                 <div class="input-group controls">
                   <label for="name">Hospital Name</label>
-                  <input formControlName="hospitalName" type="text" class="form-control" name="name">
+                  <input formControlName="hospitalName" type="text" class="form-control" name="name" [disabled]="!sShow">
                 </div>
                 <div class="input-group controls">
                   <label for="name">Contact Details</label>
-                  <input formControlName="contact" type="text" class="form-control" name="name">
+                  <input formControlName="contact" type="text" class="form-control" name="name" [disabled]="!sShow">
                 </div>
                 <div class="input-group controls">
                   <label for="name">Result</label>
-                  <select class="form-control" id="exampleFormControlSelect1" formControlName="result">
+                  <select class="form-control" id="exampleFormControlSelect1" formControlName="result" [disabled]="!sShow">
                     <option>POSITIVE</option>
                     <option>NEGATIVE</option>
                   </select>
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary" *ngIf="sShow">Submit</button>
             </form>
           </div>
 
@@ -71,7 +71,7 @@
           <th>Firstname</th>
           <th>Lastname</th>
           <th>Action</th>
-          <th><button type="button" class="btn btn-primary" (click)="openPopup()">Add Patient</button></th>
+          <th><button type="button" class="btn btn-success" (click)="openPopup(1)">Add Patient</button></th>
         </tr>
       </thead>
       <tbody>
@@ -80,9 +80,9 @@
           <td>{{patient.firstName}}</td>
           <td>{{patient.lastName}}</td>
           <td><button (click)="deletePatient(patient.patientId)" class="btn btn-danger">Delete</button>
-            <button (click)="updatePatient(patient.patientId)" class="btn btn-primary"
+            <button (click)="updatePatient(patient)" class="btn btn-info"
               style="margin-left: 10px">Update</button>
-            <button (click)="viewPatient(patient.patientId)" class="btn btn-primary" style="margin-left: 10px">View
+            <button (click)="viewDetails(patient)" class="btn btn-primary" style="margin-left: 10px">View
               Details</button>
           </td>
         </tr>

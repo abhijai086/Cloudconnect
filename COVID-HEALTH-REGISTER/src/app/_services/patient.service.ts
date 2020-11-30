@@ -19,7 +19,7 @@ export class PatientService {
     }
 
     updatePatient(patientId: number, updatedValues: any): Observable<Object> {
-        return this.http.post(`${environment.backendUrl}/updatepatient/${patientId}`, updatedValues);
+        return this.http.post(`${environment.backendUrl}/updatePatient/${patientId}`, updatedValues);
     }
 
     deletePatient(patientId: number){
